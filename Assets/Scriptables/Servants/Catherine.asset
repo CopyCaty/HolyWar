@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e5c130fe77edef40b909ca39f356d13, type: 3}
+  m_Name: Catherine
+  m_EditorClassIdentifier: 
+  Name: Catherine
+  ServantClass: 0
+  AttactType: 0
+  Health: 808
+  Energy: 0
+  WeaponDamage: 74
+  Armor: 0
+  Shield: 0
+  MoveSpeed: 0
+  AttackRange: 1.5
+  AttackSpeed: 50
+  HealthRegen: 0
+  EnergyRegen: 0
+  Skills:
+  - {fileID: 11400000, guid: 4a15c8c2484b5d641b1c1384737a333f, type: 2}
+  - {fileID: 11400000, guid: ad48be0d3c0ffb441a0121b17e71f710, type: 2}
+  - {fileID: 11400000, guid: ccb7e7ca2ab09ca4b8bddd8291640c94, type: 2}
+  - {fileID: 11400000, guid: 59c8cf366c7d56540a90cc081b7aa295, type: 2}
+  HealthGrowth: 0
+  EnergyGrowth: 0
+  WeaponDamageGrowth: 6.09
+  ArmorGrowth: 0
+  ShieldGrowth: 0
+  AttackSpeedGrowth: 0
+  HealthRegenGrowth: 0
+  EnergyRegenGrowth: 0

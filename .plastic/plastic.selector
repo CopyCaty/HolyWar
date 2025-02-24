@@ -1,0 +1,4 @@
+repository "Holy War@wechat_os_qy0xpit40ibzyncfbvqfje6ou@cloud.cn"
+  path "/"
+    br "/main"
+    co "/main"
