@@ -30,7 +30,7 @@ public class PlayerController : NetworkBehaviour
         Debug.Log($"Assigned team {team} to player {rpcParams.Receive.SenderClientId}");
 
         // Set the team for the servant controller on the server side
-        //servantController.Team = team;
+        servantController.Team = team;
 
         // Send the team assignment to the client via ClientRpc
         AssignTeamClientRpc(team);

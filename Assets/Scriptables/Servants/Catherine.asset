@@ -21,7 +21,7 @@ MonoBehaviour:
   Armor: 0
   Shield: 0
   MoveSpeed: 0
-  AttackRange: 1.5
+  AttackRange: 5
   AttackSpeed: 50
   HealthRegen: 0
   EnergyRegen: 0

@@ -83,6 +83,7 @@ public class ServantController : NetworkBehaviour
     [ClientRpc]
     public void MoveToDesClientRpc(Vector3 Des, float Distance = 0)
     {
+        if(Distance == 0) this.Target = null;
         agent.SetDestination(Des);
         agent.stoppingDistance = Distance;
         Quaternion rotationToLookAt = Quaternion.LookRotation(Des - transform.position);
