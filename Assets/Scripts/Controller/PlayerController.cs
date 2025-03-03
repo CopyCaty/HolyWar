@@ -15,7 +15,7 @@ public class PlayerController : NetworkBehaviour
         servantController = this.GetComponent<ServantController>();
         if (IsOwner)  // Make sure this code runs for the local player
         {
-            
+            GlobalManager.Instance.playerController = this;
             AssignTeamServerRpc();  // Ask the server to assign a team
         }
 
@@ -28,7 +28,7 @@ public class PlayerController : NetworkBehaviour
 
         // Log the assigned team (for debugging)
         Debug.Log($"Assigned team {team} to player {rpcParams.Receive.SenderClientId}");
-
+        playerTeam = team;
         // Set the team for the servant controller on the server side
         servantController.Team = team;
 
@@ -43,7 +43,7 @@ public class PlayerController : NetworkBehaviour
         // Assign the team to the player on the client side
         playerTeam = assignedTeam;
         servantController.Team = playerTeam;  // Update the team on the servant controller
-        Debug.Log($"Player assigned to team {playerTeam} on client side");
+        Debug.Log($"Player assigned to team {assignedTeam} on client side");
     }
     private void Update()
     {
@@ -69,7 +69,7 @@ public class PlayerController : NetworkBehaviour
             NetworkObject hitObjectNet = hit.collider.gameObject.GetComponent<NetworkObject>();
             if (hitObjectNet != null)
             {
-                Debug.Log("TARGET FOUND");
+                Debug.Log($"TARGET FOUND:{NetworkObjectId}");
                 MoveAndAttackServerRpc(hit.point, (long)hitObjectNet.NetworkObjectId);
             }
             else
@@ -92,18 +92,18 @@ public class PlayerController : NetworkBehaviour
             servantController.MoveToDesClientRpc(hitPoint);
             return;
         }
-        // Find the NetworkObject from the NetworkObjectId
-        NetworkObject targetNetworkObject = NetworkManager.Singleton.SpawnManager.GetPlayerNetworkObject((ulong)targetNetworkObjectId);
-
-        if (targetNetworkObject != null)
+        Debug.Log(targetNetworkObjectId);
+        NetworkObject targetNetworkObject;
+        if(NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue((ulong)targetNetworkObjectId, out targetNetworkObject))
         {
+            Debug.Log($"targetNetworkObject:{targetNetworkObject.name}");
             GameObject targetObject = targetNetworkObject.gameObject;
-
             // Check if it's a unit and handle the logic
             if (targetObject.CompareTag("Unit"))
             {
+                Debug.Log($"PlayerTeam:{playerTeam} TargetTeam:{targetObject.GetComponent<AbstractUnit>().Team}");
                 if (!targetObject.GetComponent<AbstractUnit>().IsDead &&
-                    targetObject.GetComponent<AbstractUnit>().Team != playerTeam)
+                    targetObject.GetComponent<AbstractUnit>().Team.Value != playerTeam)
                 {
                     Debug.Log("Attack to Client");
                     servantController.SetTargetClientRpc((ulong)targetNetworkObjectId);
@@ -114,12 +114,13 @@ public class PlayerController : NetworkBehaviour
                     servantController.MoveToDesClientRpc(hitPoint);
                 }
             }
-        }
-        else
+        }else
         {
-            // If no valid target, just move to the hit point
+            Debug.Log("NetObject Not Found!");
             servantController.MoveToDesClientRpc(hitPoint);
         }
+        // Find the NetworkObject from the NetworkObjectId
+        
 
         // Optionally, send the hit point to the client for visualization
         ShowHitPositionClientRpc(hitPoint);
@@ -130,9 +131,9 @@ public class PlayerController : NetworkBehaviour
     private void ShowHitPositionClientRpc(Vector3 hitPosition)
     {
         // Instantiate a red sphere at the hit position on the client side
-        GameObject hitSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        hitSphere.transform.position = hitPosition;
-        hitSphere.GetComponent<Renderer>().material.color = Color.red;  // Make the sphere red
-        Destroy(hitSphere, 2f);  // Destroy the sphere after 2 seconds (optional)
+        //GameObject hitSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        //hitSphere.transform.position = hitPosition;
+        //hitSphere.GetComponent<Renderer>().material.color = Color.red;  // Make the sphere red
+        //Destroy(hitSphere, 2f);  // Destroy the sphere after 2 seconds (optional)
     }
 }

@@ -6,7 +6,12 @@ public class AbstractSkill : CastAble
 {
     public SkillScriptable skillScriptable;
 
-    public void Cast()
+    public bool CheckCastAble(AbstractUnit unit)
+    {
+        return true;
+    }
+
+    public void Cast(AbstractUnit unit)
     {
         throw new System.NotImplementedException();
     }

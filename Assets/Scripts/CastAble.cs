@@ -4,5 +4,6 @@ using UnityEngine;
 
 public interface CastAble
 {
-    public void Cast();
+    public bool CheckCastAble(AbstractUnit unit);
+    public void Cast(AbstractUnit unit);
 }

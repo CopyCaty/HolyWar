@@ -14,7 +14,7 @@ public abstract class AbstractUnit : NetworkBehaviour, DamageAble
         Minion
     }
     public UnitTypeEnum UnitType;
-    public int Team;
+    public NetworkVariable<int> Team;
     public float MaxHP;
     public float HP;
     public float Armor;
@@ -44,7 +44,7 @@ public abstract class AbstractUnit : NetworkBehaviour, DamageAble
     private void OnMouseEnter()
     {
         if (IsDead) return;
-        if(this.GetComponent<PlayerController>().playerTeam == Team)
+        if(GlobalManager.Instance.playerController.playerTeam == Team.Value)
         {
             GetComponentInChildren<Outline>().OutlineColor = Color.green;
         }else

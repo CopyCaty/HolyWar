@@ -12,7 +12,7 @@ public class ServantController : NetworkBehaviour
     private AbstractServantUnit servant;
     
     private GameObject Target;
-    public int Team { get => servant.Team; set => servant.Team = value; }
+    public int Team { get => servant.Team.Value; set => servant.Team.Value = value; }
 
     float rotateVelocity;
     float rotateSpeedMovement = .1f;
