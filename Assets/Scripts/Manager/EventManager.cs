@@ -6,34 +6,25 @@ using UnityEngine;
 public class EventManager : Singleton<EventManager>
 {
 
-    public class DamgageEventArgs : EventArgs
+    public DamageEvent damageEvent;
+
+    private void Awake()
     {
-        public Damage Damage;
+        damageEvent = new DamageEvent();
     }
-    public event EventHandler<DamgageEventArgs> BeforeDamgageEvent;
-
-    public event EventHandler<DamgageEventArgs> TakeDamgageEvent;
-    
-    public event EventHandler<DamgageEventArgs> DamgageDealtEvent;
-
-    private void Start()
+    private void OnEnable()
     {
-        
+        damageEvent.OnTakeDamageTrigger += DamageHandler;
     }
 
-    public void DamageEvent(object sender, Damage damage)
+    private void OnDisable()
     {
-        if (damage.DamageTaker.IsDead) return;
-        BeforeDamgageEvent?.Invoke(this, new DamgageEventArgs { Damage = damage});
-        DamageHandler(ref damage);
-        TakeDamgageEvent?.Invoke(this, new DamgageEventArgs { Damage = damage });
-        DamgageDealtEvent?.Invoke(this, new DamgageEventArgs { Damage = damage });
-
+        damageEvent.OnTakeDamageTrigger -= DamageHandler;
     }
 
-    
 
-    public void DamageHandler(ref Damage damage)
+
+    public void DamageHandler(Damage damage)
     {
         switch (damage.DamageType)
         {

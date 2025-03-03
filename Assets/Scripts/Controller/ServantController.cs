@@ -125,6 +125,6 @@ public class ServantController : NetworkBehaviour
         damage.DamageSender = servant;
         damage.IsDogeAble = true;
         damage.DamageTaker = Target.GetComponent<AbstractUnit>();
-        EventManager.Instance.DamageEvent(this, damage);
+        EventManager.Instance.damageEvent.DealDamageServerRpc(damage);
     }
 }
