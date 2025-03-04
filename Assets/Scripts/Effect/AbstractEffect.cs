@@ -4,5 +4,8 @@ using UnityEngine;
 
 public abstract class AbstractEffect : ScriptableObject
 {
-    public abstract void OnEffect();
+
+    public virtual void OnEffect(AbstractUnit playerUnit, Vector3 pos) { }
+    public virtual void OnEffect(AbstractUnit playerUnit, AbstractUnit targetUnit) { }
+    
 }

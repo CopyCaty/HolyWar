@@ -20,6 +20,8 @@ public abstract class AbstractUnit : NetworkBehaviour, DamageAble
     public float Armor;
     public float Shield;
     public bool IsDead;
+    public bool IsVisible;
+    public bool IsImortal;
 
     public GameObject HealthBarPrefab;
     public GameObject HealthBarInstance;
